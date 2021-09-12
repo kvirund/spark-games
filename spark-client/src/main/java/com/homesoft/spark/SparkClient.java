@@ -6,21 +6,12 @@ package com.homesoft.spark;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.types.DataTypes;
-import org.apache.spark.sql.types.MetadataBuilder;
-import org.apache.spark.sql.types.StructField;
-import org.apache.spark.sql.types.StructType;
 
 public class SparkClient {
     public static void main(String[] args) {
         System.out.println("Hey there!");
 
         final SparkSession spark = SparkSession.builder().appName("SampleSparkClient").master("local[*]").getOrCreate();
-        final StructType schema = new StructType(new StructField[]{new StructField("id",
-                DataTypes.LongType,
-                false,
-                new MetadataBuilder().build()),
-                new StructField("name", DataTypes.StringType, true, new MetadataBuilder().build())});
         final Dataset<Row> ids = spark.read().format("excel").load();
         ids.show();
     }
