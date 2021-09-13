@@ -3,8 +3,6 @@
  */
 package com.homesoft.spark;
 
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class SparkClient {
@@ -12,7 +10,23 @@ public class SparkClient {
         System.out.println("Hey there!");
 
         final SparkSession spark = SparkSession.builder().appName("SampleSparkClient").master("local[*]").getOrCreate();
-        final Dataset<Row> ids = spark.read().format("excel").load();
-        ids.show();
+        final boolean useCrealyticsImplementation = true;
+        //noinspection ConstantConditions
+        if (useCrealyticsImplementation) {
+            spark.read()
+                    .format("com.crealytics.spark.excel")
+                    .option("inferSchema", true)
+                    .option("header", true)
+                    .load("sample.xlsx")
+                    .registerTempTable("excel");
+        } else {
+            spark.read()
+                    .format("com.homesoft.spark.SparkConnector")
+                    .option("sheetName", "Table1")
+                    .load("sample.xlsx")
+                    .registerTempTable("excel");
+        }
+
+        spark.sql("select * from excel").show();
     }
 }

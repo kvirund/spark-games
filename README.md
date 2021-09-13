@@ -4,6 +4,9 @@ Inspiration:
 * [Extending Spark SQL 2 4 with New Data Sources Live Coding Session -Jacek Laskowski](https://youtu.be/YKkgVEgn2JE)
 * [Extending Spark SQL 2 4 with New Data Sources Live Coding Session—continues -Jacek Laskowski](https://youtu.be/vfd83ELlMfc)
 
+ALso found ready implementation for Excel files data source: https://github.com/crealytics/spark-excel. Please use flag
+`useCrealyticsImplementation` to control which implementation to use: mine or theirs.
+
 ## Setting up Spark cluster
 
 See https://raw.githubusercontent.com/bitnami/bitnami-docker-spark for the details. Briefly:
